@@ -1,15 +1,14 @@
 'use server';
 
-import { auth, signIn } from '@/auth';
+import { signIn } from '@/auth';
 import { AuthError } from 'next-auth';
 import { redirect } from 'next/navigation';
 
 export const loginAction = async (_: any, data: FormData) => {
     const loginBtn = data.get('loginBtn');
 
+    let success = false;
     if (loginBtn) {
-        let success = false;
-
         try {
             if (!data.get('email') || !data.get('password')) {
                 return {
@@ -21,6 +20,7 @@ export const loginAction = async (_: any, data: FormData) => {
                 password: data.get('password') as string,
                 redirect: false,
             });
+
             success = true;
         } catch (error) {
             if (error instanceof AuthError) {
@@ -34,6 +34,10 @@ export const loginAction = async (_: any, data: FormData) => {
                 }
             }
         }
-        if (success) redirect('/');
+        if (success) {
+            return {
+                success: true,
+            };
+        }
     }
 };

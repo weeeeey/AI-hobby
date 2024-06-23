@@ -1,6 +1,6 @@
 'use server';
-import db from '@/utils/db';
-import { saltAndHashPassword } from '@/utils/password';
+import db from '@/lib/db';
+import { saltAndHashPassword } from '@/lib/password';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
 

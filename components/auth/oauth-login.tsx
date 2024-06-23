@@ -6,7 +6,7 @@ const OauthLogin = () => {
     return (
         <form
             action={oauthAction}
-            className="flex flex-col items-center justify-center space-y-2 *:w-full "
+            className="flex items-center justify-center space-x-2 *:w-full"
         >
             <OauthBtn provider="google" />
             <OauthBtn provider="github" />

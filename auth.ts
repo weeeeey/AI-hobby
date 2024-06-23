@@ -1,6 +1,6 @@
 import NextAuth, { CredentialsSignin, type User } from 'next-auth';
 import { PrismaAdapter } from '@auth/prisma-adapter';
-import db from './utils/db';
+import db from './lib/db';
 
 import authConfig from './auth.config';
 

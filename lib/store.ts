@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-type ModalType = 'login' | 'alert';
+type ModalType = 'login' | 'logout' | 'register' | '';
 
 interface ModalStore {
     isOpen: boolean;
@@ -11,7 +11,7 @@ interface ModalStore {
 
 export const useModalStore = create<ModalStore>((set) => ({
     isOpen: false,
-    modalType: 'login',
+    modalType: '',
     onOpen: (modal: ModalType) => set({ isOpen: true, modalType: modal }),
-    onClose: () => set({ isOpen: false }),
+    onClose: () => set({ isOpen: false, modalType: '' }),
 }));

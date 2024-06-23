@@ -6,6 +6,7 @@ async function SignInPage() {
     const currentUser = await auth();
 
     if (currentUser) {
+        console.log(currentUser);
         return (
             <div className="space-y-4">
                 <div>Already signed in</div>

@@ -3,8 +3,8 @@ import Kakao from 'next-auth/providers/kakao';
 import Github from 'next-auth/providers/github';
 import { CredentialsSignin, type NextAuthConfig } from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
-import { verifyPassword } from './utils/password';
-import db from './utils/db';
+import { verifyPassword } from './lib/password';
+import db from './lib/db';
 
 export default {
     providers: [

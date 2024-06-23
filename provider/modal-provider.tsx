@@ -1,9 +1,10 @@
-import { LoginModal } from '@/components/modal/login-modal';
+import AuthModal from '@/components/modal/auth-modal';
 
 const ModalProvider = ({ children }: { children: React.ReactNode }) => {
     return (
         <>
-            <LoginModal />
+            <AuthModal />
+
             {children}
         </>
     );
