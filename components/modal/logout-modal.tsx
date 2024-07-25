@@ -33,7 +33,9 @@ const LogoutModal = () => {
                         <Button onClick={() => signOut()} variant="outline">
                             로그아웃
                         </Button>
-                        <Button variant="outline">취소</Button>
+                        <Button onClick={onClose} variant="outline">
+                            취소
+                        </Button>
                     </DialogFooter>
                 </DialogContent>
             </DialogPortal>

@@ -2,7 +2,6 @@
 
 import { signIn } from '@/auth';
 import { AuthError } from 'next-auth';
-import { redirect } from 'next/navigation';
 
 export const loginAction = async (_: any, data: FormData) => {
     const loginBtn = data.get('loginBtn');

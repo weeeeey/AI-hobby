@@ -2,6 +2,193 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
+body,
+:root {
+    height: 100%;
+    /* cursor: none; */
+}
+
+.ima {
+    animation: scroll-scale linear;
+    animation-timeline: scroll();
+}
+
+@keyframes scroll-scale {
+    to {
+        transform: scale(3);
+    }
+}
+
+@layer components {
+    .bar-wrapper {
+        @apply w-8 h-full  flex justify-center items-end;
+    }
+    .bar {
+        @apply w-1/3 h-8 bg-black transition-all;
+    }
+
+    .bar-wrapper:hover > * {
+        @apply h-24 
+        /* animation: hh 0.5s linear forwards; */;
+    }
+    .bar-wrapper:hover + .bar-wrapper > * {
+        @apply h-20;
+    }
+    .bar-wrapper:hover + .bar-wrapper + .bar-wrapper > * {
+        @apply h-16;
+    }
+    .bar-wrapper:has(+ .bar-wrapper:hover) > * {
+        @apply h-20;
+    }
+    .bar-wrapper:has(+ .bar-wrapper + .bar-wrapper:hover) > * {
+        @apply h-16;
+    }
+}
+
+@keyframes hh {
+    100% {
+        height: 5vh;
+    }
+}
+
+@layer components {
+    .text-wrapper {
+        @apply text-white uppercase text-[5vw] z-50 bg-blue-500 overflow-hidden;
+    }
+    .text-wrapper:hover .text-span {
+        /* @apply bg-red-500; */
+        animation: scroll-text var(--_animation-delay, 0.5s) linear forwards;
+    }
+}
+@keyframes scroll-text {
+    50% {
+        transform: translateY(-100%);
+    }
+
+    100% {
+        transform: translateY(0%);
+    }
+}
+
+@layer components {
+    .tt {
+        @apply transition-all  flex flex-col items-center py-5 justify-start duration-300 group-hover:duration-1000 bg-white top-0 left-0 w-full h-full absolute;
+    }
+    .letter:hover .tt {
+        @apply duration-1000;
+        animation: letter-animation 3s forwards;
+    }
+}
+@keyframes letter-animation {
+    30% {
+        transform: translateY(-13rem);
+    }
+    60% {
+        z-index: 999;
+    }
+    /* 70% {
+        transform: translateY(0);
+    } */
+    70% {
+        transform: translateY(0);
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        scale: 1;
+    }
+
+    100% {
+        z-index: 999;
+        scale: 3;
+        /* position: fixed; */
+    }
+}
+
+.front,
+.back {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+}
+
+.back {
+    transform: rotateX(-180deg); /* 뒷면을 미리 뒤집어 놓기 */
+}
+
+@layer components {
+    .card-container {
+        @apply w-full h-full relative transition-all;
+        transform-style: preserve-3d;
+    }
+    .flip:hover .card-container {
+        animation: flip-animation 2s forwards;
+    }
+    .text {
+        animation: tracking-in-expand 2s linear both;
+        animation-timeline: view(0%);
+    }
+}
+
+@keyframes tracking-in-expand {
+    0% {
+        letter-spacing: -0.5em;
+        opacity: 0;
+    }
+
+    15% {
+        letter-spacing: 0em;
+        opacity: 1;
+    }
+}
+
+@keyframes flip-animation {
+    0% {
+        transform: rotateX(0);
+    }
+    100% {
+        transform: rotateX(-180deg);
+    }
+}
+
+@layer components {
+    .dummy {
+        animation: carousel var(--_animation-duration, 8s)
+            var(--animation-direction, forwards) linear infinite;
+    }
+    .dummy[data-direction='reverse'] {
+        --animation-direction: reverse;
+    }
+}
+
+@keyframes carousel {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(calc(-100% - 2.5rem));
+    }
+}
+
+@layer components {
+    .videoContainer {
+        @apply relative h-[100vh] w-[100vh] top-0 left-[50vw] -translate-x-[50vh] scale-50;
+        clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+        animation: scroll-transform 1s linear both;
+        animation-timeline: view();
+        animation-range: 50vh 100vh;
+    }
+}
+
+@keyframes scroll-transform {
+    100% {
+        clip-path: polygon(100% 0, 100% 100%, 0% 100%, 0 0);
+        width: 100vw;
+        translate: calc(-50vw) 0;
+        transform: scale(1);
+    }
+}
+
 @layer base {
     :root {
         --background: 0 0% 100%;
@@ -74,37 +261,88 @@
         @apply bg-background text-foreground;
     }
 }
-
-@layer components {
-    .spin {
-        @apply spin-3s;
-    }
-}
-
-@keyframes animate-spin {
+@keyframes details-show {
     from {
-        transform: rotate(0deg);
+        opacity: 0;
+        transform: var(--details-translate, translateY(-0.5em));
+    }
+}
+
+details[open] > *:not(summary) {
+    animation: details-show 150ms;
+    background-color: blue;
+}
+
+.switch {
+    position: relative;
+    height: 1.5rem;
+    width: 3rem;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    border-radius: 9999px;
+    background-color: rgba(100, 116, 139, 0.377);
+    transition: all 0.3s ease;
+}
+
+.switch:checked {
+    background-color: rgba(236, 72, 153, 1);
+}
+
+.switch::before {
+    position: absolute;
+    content: '';
+    left: calc(1.5rem - 1.6rem);
+    top: calc(1.5rem - 1.6rem);
+    display: block;
+    height: 1.6rem;
+    width: 1.6rem;
+    cursor: pointer;
+    border: 1px solid rgba(100, 116, 139, 0.527);
+    border-radius: 9999px;
+    background-color: rgba(255, 255, 255, 1);
+    box-shadow: 0 3px 10px rgba(100, 116, 139, 0.327);
+    transition: all 0.3s ease;
+}
+
+.switch:hover::before {
+    box-shadow: 0 0 0px 8px rgba(0, 0, 0, 0.15);
+}
+
+.switch:checked:hover::before {
+    box-shadow: 0 0 0px 8px rgba(236, 72, 153, 0.15);
+}
+
+.switch:checked:before {
+    transform: translateX(100%);
+    border-color: rgba(236, 72, 153, 1);
+}
+
+.aaaa {
+    overflow: hidden; /* Ensures the content is not revealed until the animation */
+    border-right: 0.15em solid orange; /* The typwriter cursor */
+    white-space: nowrap;
+    letter-spacing: 0.15em; /* Adjust as needed */
+    animation: typing 3.5s steps(30, end) infinite,
+        blink-caret 0.5s step-end infinite;
+}
+
+@keyframes typing {
+    from {
+        width: 0;
     }
     to {
-        transform: rotate(360deg);
+        width: 110%;
     }
 }
 
-.spin-3s {
-    animation: animate-spin 3s linear infinite;
-}
-
-@layer components {
-    .line {
-        @apply w-full h-[10px] fixed bottom-0 left-0 bg-green-500 origin-left;
-        scale: 0 1;
-        animation: scroll-view linear;
-        animation-timeline: scroll();
-    }
-}
-
-@keyframes scroll-view {
+/* The typewriter cursor effect */
+@keyframes blink-caret {
+    from,
     to {
-        scale: 1 1;
+        border-color: transparent;
+    }
+    50% {
+        border-color: orange;
     }
 }

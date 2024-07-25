@@ -1,18 +1,17 @@
 'use client';
-import { Button } from '@/components/ui/button';
-import { useModalStore } from '@/lib/store';
-import React from 'react';
 
+import { useModalStore } from '@/lib/store';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+
+const TEXT = '가나다라마바사차자카';
+const LAST = 'l';
 const DashboardPage = () => {
     const { onOpen } = useModalStore();
-
     return (
-        <div className=" h-[150vh]">
-            <Button onClick={() => onOpen('login')}>로그인</Button>
-            <Button onClick={() => onOpen('logout')}>로그아웃</Button>
-            <Button onClick={() => onOpen('register')}>회원가입</Button>
-            <div className="spin size-32 rounded-full border-blue-500 border-[20px] border-b-transparent" />
-            <div className="line"></div>
+        <div className="h-full flex flex-col">
+            <button onClick={() => onOpen('login')}>로그인</button>
+            <button onClick={() => onOpen('logout')}>로그아웃</button>
         </div>
     );
 };
